@@ -284,11 +284,11 @@ BASH
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
-  mkdir -p ~/.local/share/fonts/pragmasevka
-  cd ~/.local/share/fonts/pragmasevka
-  curl -LO https://github.com/shytikov/pragmasevka/releases/download/v1.7.0/Pragmasevka_NF.zip
-  unzip Pragmasevka_NF.zip
-  rm Pragmasevka_NF.zip
+  mkdir -p ~/.local/share/fonts/iosevka
+  cd ~/.local/share/fonts/iosevka
+  curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
+  unzip IosevkaTerm.zip
+  rm IosevkaTerm.zip
 
   wget -O /tmp/zed.tar.gz "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arch=x86_64&os=linux&source=docs"
   tar -xvf /tmp/zed.tar.gz -C ~/.local
