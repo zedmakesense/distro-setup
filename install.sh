@@ -229,8 +229,6 @@ net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
-# Enable IP forwarding for NAT
-# net.ipv4.ip_forward = 1
 
 # kernel hardening
 kernel.kptr_restrict = 2
@@ -333,7 +331,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#bemoji \
   nixpkgs#lazydocker \
   nixpkgs#wayscriber \
-  nixpkgs#networkmanager_dmenu \
   nixpkgs#clipse \
   nixpkgs#hyprpicker \
   nixpkgs#caligula \
@@ -421,7 +418,6 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
-  # nmcli radio wifi off
 fi
 systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp nix-daemon firewalld
 systemctl mask systemd-rfkill systemd-rfkill.socket
