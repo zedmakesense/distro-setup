@@ -164,6 +164,7 @@ done
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
+echo 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/nix/var/nix/profiles/default/bin"' | sudo tee /etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG libvirt,kvm,lpadmin piyush
@@ -194,9 +195,9 @@ ufw enable
 ufw logging on
 
 # Bind dnsmasq to virbr0 only
-if [[ "$hardware" == "hardware" ]]; then
-  sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
-fi
+# if [[ "$hardware" == "hardware" ]]; then
+#   sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
+# fi
 echo 'ListenAddress 127.0.0.1' >>/etc/ssh/sshd_config
 
 # disable llmnr
@@ -251,8 +252,6 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
-  cp ~/Documents/projects/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
-  cp ~/Documents/projects/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
   ln -sf ~/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
@@ -329,6 +328,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#go-migrate \
   nixpkgs#opencode \
   nixpkgs#javaPackages.compiler.temurin-bin.jre-17
+
+nix profile add nixpkgs#yazi
 
 sudo -iu piyush bemoji --download all >/dev/null 2>&1 || true
 
