@@ -194,13 +194,8 @@ ufw default allow outgoing
 ufw enable
 ufw logging on
 
-# Bind dnsmasq to virbr0 only
-# if [[ "$hardware" == "hardware" ]]; then
-#   sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
-# fi
 echo 'ListenAddress 127.0.0.1' >>/etc/ssh/sshd_config
 
-# disable llmnr
 mkdir -p /etc/systemd/resolved.conf.d
 tee /etc/systemd/resolved.conf.d/disable-llmnr.conf >/dev/null <<'EOF'
 [Resolve]
@@ -397,8 +392,6 @@ mkdir -p /etc/systemd/zram-generator.conf.d
   echo "fs-type = swap"
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
-# rfkill unblock bluetooth
-# modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
   systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket
   systemctl disable docker.service dnsmasq
