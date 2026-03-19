@@ -322,7 +322,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#caligula \
   nixpkgs#air \
   nixpkgs#templ \
-  nixpkgs#newsraft \
   nixpkgs#go \
   nixpkgs#uv \
   nixpkgs#prettier \
