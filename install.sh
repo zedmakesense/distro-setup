@@ -279,6 +279,7 @@ su - piyush -c '
   sed -i "s|Icon=zed|Icon=$HOME/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" ~/.local/share/applications/dev.zed.Zed.desktop
   sed -i "s|Exec=zed|Exec=$HOME/.local/zed.app/libexec/zed-editor|g" ~/.local/share/applications/dev.zed.Zed.desktop
 
+  gh extension install dlvhdr/gh-dash
   rustup default stable
   cargo install typeman --no-default-features --features tui
   go install golang.org/x/tools/cmd/goimports@latest
@@ -326,7 +327,18 @@ sudo -iu piyush nix profile add \
 
 nix profile add nixpkgs#yazi
 
-sudo -iu piyush bemoji --download all >/dev/null 2>&1 || true
+sudo -iu piyush bash -c '
+  for p in \
+    bennyyip/gruvbox-dark \
+    dedukun/relative-motions \
+    yazi-rs/plugins:full-border \
+    yazi-rs/plugins:smart-paste \
+    yazi-rs/plugins:zoom \
+    yazi-rs/plugins:jump-to-char
+  do
+    ya pkg add "$p"
+  done
+' >/dev/null 2>&1 || true
 
 corepack enable
 corepack prepare pnpm@latest --activate

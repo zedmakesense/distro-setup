@@ -21,12 +21,4 @@ dir=$(echo ~/.mozilla/firefox/*.default-esr)
 ln -sf ~/Documents/projects/default/dotfiles/firefox/userESR.js "$dir/user.js"
 cp -f ~/Documents/projects/default/dotfiles/firefox/book* "$dir/bookmarkbackups/"
 
-ya pkg add bennyyip/gruvbox-dark
-ya pkg add dedukun/relative-motions
-ya pkg add yazi-rs/plugins:full-border
-ya pkg add yazi-rs/plugins:smart-paste
-ya pkg add yazi-rs/plugins:zoom
-ya pkg add yazi-rs/plugins:jump-to-char
-
-gh extension install dlvhdr/gh-dash
 gh auth login
