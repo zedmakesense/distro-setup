@@ -17,9 +17,8 @@ if gsettings list-schemas | grep -qx "$schema"; then
 fi
 
 echo -n "/home/$USER/Documents/projects/default/dotfiles/firefox/ublock.txt" | wl-copy
-dir=$(echo ~/.mozilla/firefox/*.default-release)
+dir=$(echo ~/.mozilla/firefox/*.default-esr)
 ln -sf ~/Documents/projects/default/dotfiles/firefox/userESR.js "$dir/user.js"
-ln -sf ~/Documents/projects/default/dotfiles/firefox/userChrome.css "$dir/chrome/"
 cp -f ~/Documents/projects/default/dotfiles/firefox/book* "$dir/bookmarkbackups/"
 
 ya pkg add bennyyip/gruvbox-dark
