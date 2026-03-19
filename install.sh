@@ -405,8 +405,8 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
 if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket
-  systemctl disable docker.service dnsmasq
+  systemctl enable fstrim.timer libvirtd.socket ipp-usb docker.socket
+  systemctl disable docker.service dnsmasq bluetooth avahi-daemon
 fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
