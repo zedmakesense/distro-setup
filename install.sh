@@ -317,6 +317,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#caligula \
   nixpkgs#air \
   nixpkgs#templ \
+  nixpkgs#htmx-lsp \
   nixpkgs#go \
   nixpkgs#uv \
   nixpkgs#prettier \
