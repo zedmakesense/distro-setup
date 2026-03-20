@@ -247,6 +247,8 @@ su - piyush -c '
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/
   ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
+  ln -s /usr/bin/fdfind ~/.local/bin/fd
+  ln -s /usr/bin/batcat ~/.local/bin/bat
 
   for link in ~/Documents/projects/default/dotfiles/.config/*; do
     ln -sf "$link" ~/.config/
