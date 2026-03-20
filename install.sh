@@ -315,6 +315,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#templ \
   nixpkgs#htmx-lsp \
   nixpkgs#go \
+  nixpkgs#gotools \
   nixpkgs#uv \
   nixpkgs#prettier \
   nixpkgs#shfmt \
