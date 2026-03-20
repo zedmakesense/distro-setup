@@ -168,6 +168,7 @@ echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local
 chmod 440 /etc/sudoers.d/*
 sed -i '/@include common-auth/a auth optional pam_gnome_keyring.so' /etc/pam.d/login
 sed -i '/pam_keyinit.so/a session optional pam_gnome_keyring.so auto_start' /etc/pam.d/login
+echo "session optional pam_gnome_keyring.so auto_start" >> /etc/pam.d/common-session
 
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG libvirt,kvm,lpadmin piyush
@@ -324,7 +325,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#shfmt \
   nixpkgs#go-migrate \
   nixpkgs#opencode \
-  nixpkgs#javaPackages.compiler.temurin-bin.jre-17
+  nixpkgs#jdk17_headless
 
 nix profile add nixpkgs#yazi
 
