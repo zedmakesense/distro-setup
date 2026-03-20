@@ -249,8 +249,6 @@ fi" >> ~/.profile
 
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
-  ln -sf ~/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
-  ln -sf ~/Documents/projects/default/dotfiles/.XCompose ~/.XCompose
 
   for link in ~/Documents/projects/default/dotfiles/.config/*; do
     ln -sf "$link" ~/.config/
@@ -298,8 +296,6 @@ echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 source ~/.bashrc
