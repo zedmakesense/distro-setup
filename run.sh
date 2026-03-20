@@ -21,4 +21,5 @@ dir=$(echo ~/.mozilla/firefox/*.default-esr)
 ln -sf ~/Documents/projects/default/dotfiles/firefox/userESR.js "$dir/user.js"
 cp -f ~/Documents/projects/default/dotfiles/firefox/book* "$dir/bookmarkbackups/"
 
+gh extension install dlvhdr/gh-dash
 gh auth login
