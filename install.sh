@@ -324,7 +324,7 @@ sudo -iu piyush nix profile add \
 
 nix profile add nixpkgs#yazi
 
-sudo -iu piyush bash -c '
+for u in root piyush; do
   for p in \
     bennyyip/gruvbox-dark \
     dedukun/relative-motions \
@@ -333,9 +333,9 @@ sudo -iu piyush bash -c '
     yazi-rs/plugins:zoom \
     yazi-rs/plugins:jump-to-char
   do
-    ya pkg add "$p"
+    sudo -iu "$u" ya pkg add "$p" >/dev/null 2>&1 || true
   done
-' >/dev/null 2>&1 || true
+done
 
 corepack enable
 corepack prepare pnpm@latest --activate
