@@ -238,9 +238,7 @@ su - piyush -c '
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  echo "if [ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ]; then
-    exec sway
-fi" >> ~/.profile
+  printf "%s\n" ". \"\$HOME/.bashrc\"" "[ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ] && exec sway" >| ~/.profile
 
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
