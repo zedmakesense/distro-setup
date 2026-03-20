@@ -239,7 +239,7 @@ su - piyush -c '
 
   echo "if [ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ]; then
     exec sway
-  fi" >> ~/.profile
+fi" >> ~/.profile
 
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
