@@ -238,8 +238,6 @@ su - piyush -c '
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  printf "%s\n" ". \"\$HOME/.bashrc\"" "[ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ] && exec sway" >| ~/.profile
-
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
   git clone https://github.com/zedmakesense/debsetup.git ~/Documents/projects/default/debsetup
@@ -247,7 +245,8 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
-  ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
+  ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/
+  ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
 
   for link in ~/Documents/projects/default/dotfiles/.config/*; do
     ln -sf "$link" ~/.config/
@@ -261,7 +260,7 @@ su - piyush -c '
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
   /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add /home/piyush/Documents/projects/default/debsetup
-  source ~/.bashrc
+  source ~/.profile
 
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
@@ -294,10 +293,12 @@ mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
+cp /home/piyush/Documents/projects/default/dotfiles/.profile ~/
+sed -i '$d' ~/.profile
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-source ~/.bashrc
+source ~/.profile
 systemctl restart nix-daemon
 
 sudo -iu piyush nix profile add \
