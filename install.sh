@@ -166,9 +166,6 @@ echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
 echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' | sudo tee /etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
-sed -i '/@include common-auth/a auth optional pam_gnome_keyring.so' /etc/pam.d/login
-sed -i '/pam_keyinit.so/a session optional pam_gnome_keyring.so auto_start' /etc/pam.d/login
-echo "session optional pam_gnome_keyring.so auto_start" >> /etc/pam.d/common-session
 
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG libvirt,kvm,lpadmin piyush
