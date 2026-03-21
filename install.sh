@@ -234,7 +234,7 @@ flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 loginctl enable-linger piyush
 tail -n 1 ~/.profile > /tmp/profile_last_line
 head -n -1 ~/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp ~/.profile
-sudo -u piyush bash -c '
+su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
