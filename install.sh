@@ -264,7 +264,7 @@ su - piyush -c '
   zoxide add /home/piyush/Documents/projects/default/debsetup
 
   tmp=$(mktemp)
-  head -n -1 "$HOME/.profile" > "$tmp"
+  head -n -1 ~/.profile > "$tmp"
   . "$tmp"
   rm -f "$tmp"
 
