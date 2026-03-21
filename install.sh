@@ -232,8 +232,8 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 loginctl enable-linger piyush
-tail -n 1 ~/.profile > /tmp/profile_last_line
-head -n -1 ~/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp ~/.profile
+tail -n 1 /home/piyush/.profile > /tmp/profile_last_line
+head -n -1 /home/piyush/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp /home/piyush/.profile
 su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
@@ -292,6 +292,7 @@ su - piyush -c '
 
   flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 '
+cat /tmp/profile_last_line >> /home/piyush/.profile
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
@@ -302,8 +303,6 @@ cp /home/piyush/Documents/projects/default/dotfiles/.profile ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 source ~/.profile
-cat /tmp/profile_last_line >> ~/.profile
-rm /tmp/profile_last_line
 systemctl restart nix-daemon
 
 sudo -iu piyush nix profile add \
