@@ -232,7 +232,9 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 loginctl enable-linger piyush
-su - piyush -c '
+tail -n 1 ~/.profile > /tmp/profile_last_line
+head -n -1 ~/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp ~/.profile
+sudo -u piyush bash -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
@@ -262,6 +264,7 @@ su - piyush -c '
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
   /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add /home/piyush/Documents/projects/default/debsetup
+
   source ~/.profile
 
   mkdir -p ~/.local/share/fonts/iosevka
@@ -299,6 +302,8 @@ cp /home/piyush/Documents/projects/default/dotfiles/.profile ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 source ~/.profile
+cat /tmp/profile_last_line >> ~/.profile
+rm /tmp/profile_last_line
 systemctl restart nix-daemon
 
 sudo -iu piyush nix profile add \
