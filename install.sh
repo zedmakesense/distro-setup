@@ -263,10 +263,11 @@ su - piyush -c '
   /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add /home/piyush/Documents/projects/default/debsetup
 
-  tmp=$(mktemp)
-  head -n -1 ~/.profile > "$tmp"
-  echo "$tmp"
-  . "$tmp"
+  # tmp=$(mktemp)
+  # head -n -3 ~/.profile > "$tmp"
+  # echo "$tmp"
+  # . "$tmp"
+  source ~/.profile
 
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
