@@ -265,8 +265,8 @@ su - piyush -c '
 
   tmp=$(mktemp)
   head -n -1 ~/.profile > "$tmp"
+  echo "$tmp"
   . "$tmp"
-  rm -f "$tmp"
 
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
@@ -299,7 +299,6 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
-echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
