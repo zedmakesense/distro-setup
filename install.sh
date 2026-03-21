@@ -290,11 +290,11 @@ su - piyush -c '
 
 if [[ "$hardware" == "hardware" ]]; then
   su - piyush -c '
-  podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
-  podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
-  podman volume create convertx-data
-  podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data ghcr.io/c4illin/convertx:latest
-  podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
+    podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
+    podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
+    podman volume create convertx-data
+    podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data ghcr.io/c4illin/convertx:latest
+    podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
   '
 fi
 
@@ -355,12 +355,6 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
   xargs -n1 wget
 apt install -y ~/debsetup/*deb
 
-git clone --depth 1 https://gitlab.com/ananicy-cpp/ananicy-cpp.git
-cd ananicy-cpp
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DENABLE_SYSTEMD=ON -DUSE_BPF_PROC_IMPL=ON -DWITH_BPF=ON
-cmake --build build --target ananicy-cpp
-cmake --install build --component Runtime
-
 THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
 THEME_DEST="/usr/share/Kvantum/Gruvbox"
 mkdir -p "$THEME_DEST"
@@ -370,29 +364,6 @@ cp "$THEME_SRC/gruvbox-kvantum.svg" "$THEME_DEST/Gruvbox.svg"
 THEME_DEST="/usr/share"
 cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "$THEME_DEST/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "$THEME_DEST/icons"
-
-git clone --depth=1 https://github.com/RogueScholar/ananicy.git
-git clone --depth=1 https://github.com/CachyOS/ananicy-rules.git
-mkdir -p /etc/ananicy.d/roguescholar /etc/ananicy.d/zz-cachyos
-cp -r ananicy/ananicy.d/* /etc/ananicy.d/roguescholar/
-cp -r ananicy-rules/00-default/* /etc/ananicy.d/zz-cachyos/
-cp -r ananicy-rules/00-types.types /etc/ananicy.d/zz-cachyos/
-cp -r ananicy-rules/00-cgroups.cgroups /etc/ananicy.d/zz-cachyos/
-tee /etc/ananicy.d/ananicy.conf >/dev/null <<'EOF'
-check_freq = 15
-cgroup_load = false
-type_load = true
-rule_load = true
-apply_nice = true
-apply_latnice = true
-apply_ionice = true
-apply_sched = true
-apply_oom_score_adj = true
-apply_cgroup = true
-loglevel = info
-log_applied_rule = false
-cgroup_realtime_workaround = false
-EOF
 
 mkdir -p /etc/firefox/policies
 ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
@@ -417,7 +388,7 @@ fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
 fi
-systemctl enable NetworkManager NetworkManager-dispatcher ufw ananicy-cpp
+systemctl enable NetworkManager NetworkManager-dispatcher ufw
 systemctl mask systemd-rfkill systemd-rfkill.socket apparmor
 systemctl disable NetworkManager-wait-online.service apparmor
 
