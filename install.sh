@@ -232,8 +232,6 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 loginctl enable-linger piyush
-tail -n 1 /home/piyush/.profile > /tmp/profile_last_line
-head -n -1 /home/piyush/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp /home/piyush/.profile
 su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
@@ -265,7 +263,10 @@ su - piyush -c '
   /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add /home/piyush/Documents/projects/default/debsetup
 
+  tail -n 1 ~/.profile > /tmp/profile_last_line
+  head -n -1 ~/.profile > /tmp/profile_tmp && mv /tmp/profile_tmp ~/.profile
   source ~/.profile
+  cat /tmp/profile_last_line >> ~/.profile
 
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
@@ -296,8 +297,6 @@ if [[ "$hardware" == "hardware" ]]; then
     podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
   '
 fi
-
-cat /tmp/profile_last_line >> /home/piyush/.profile
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
