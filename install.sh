@@ -296,7 +296,6 @@ touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 cp /home/piyush/Documents/projects/default/dotfiles/.profile ~/
-sed -i '$d' ~/.profile
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 source ~/.profile
