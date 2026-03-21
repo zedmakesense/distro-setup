@@ -389,12 +389,12 @@ if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
 fi
 systemctl enable NetworkManager NetworkManager-dispatcher ufw
-systemctl mask systemd-rfkill systemd-rfkill.socket apparmor
-systemctl disable NetworkManager-wait-online.service apparmor
+systemctl mask systemd-rfkill systemd-rfkill.socket
+systemctl disable NetworkManager-wait-online.service avahi-daemon
 
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
 
-apt remove --purge -y vim-common vim-tiny libsystemd-dev libbpf-dev libelf-dev bpftool nano vlc
+apt remove --purge -y vim-common vim-tiny nano vlc
 apt autoremove --purge -y
 apt clean
