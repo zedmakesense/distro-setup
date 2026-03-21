@@ -284,14 +284,19 @@ su - piyush -c '
   cargo install typeman --no-default-features --features tui
   go install golang.org/x/tools/cmd/goimports@latest
 
-  podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
-  podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
-  podman volume create convertx-data
-  podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data:Z ghcr.io/c4illin/convertx
-  podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
-
   flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 '
+
+if [[ "$hardware" == "hardware" ]]; then
+  su - piyush -c '
+    podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
+    podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
+    podman volume create convertx-data
+    podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data:Z ghcr.io/c4illin/convertx
+    podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
+  '
+fi
+
 cat /tmp/profile_last_line >> /home/piyush/.profile
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
