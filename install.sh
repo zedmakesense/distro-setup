@@ -108,58 +108,11 @@ DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan wifi"
 EOF
 fi
 
-scaling_f="/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver"
-pstate_supported=false
-driver=""
-if [ -d /sys/devices/system/cpu/intel_pstate ]; then
-  driver="intel_pstate"
-  pstate_supported=true
-elif [ -d /sys/devices/system/cpu/amd_pstate ] || [ -d /sys/devices/system/cpu/amd-pstate ]; then
-  # kernel docs and kernels may expose amd_pstate/amd-pstate; accept either
-  driver="amd_pstate"
-  pstate_supported=true
-elif [ -r "$scaling_f" ]; then
-  # fallback: read scaling_driver and normalise
-  rawdrv=$(cat "$scaling_f" 2>/dev/null || true)
-  case "$rawdrv" in
-  *intel*)
-    driver="intel_pstate"
-    pstate_supported=true
-    ;;
-  *amd*)
-    driver="amd_pstate"
-    pstate_supported=true
-    ;;
-  *) driver="$rawdrv" ;;
-  esac
-fi
-
-pstate_param=""
-if [ "$pstate_supported" = true ]; then
-  if [ "$driver" = "intel_pstate" ]; then
-    pstate_param="intel_pstate=active"
-  elif [ "$driver" = "amd_pstate" ]; then
-    pstate_param="amd_pstate=active"
-  fi
-fi
-
-extra_params="fsck.repair=yes zswap.enabled=0"
-[ -n "$pstate_param" ] && extra_params="$extra_params $pstate_param"
-
 sed -i '/^timeout /d;/^editor /d' /boot/efi/loader/loader.conf
 {
   echo "timeout 2"
   echo "editor no"
 } >>/boot/efi/loader/loader.conf
-
-for f in /boot/efi/loader/entries/*; do
-  opts=$(sed -n 's/^options[[:space:]]\+//p' "$f")
-
-  for p in $extra_params; do
-    echo "$opts" | grep -Fq "$p" ||
-      sed -i "/^options[[:space:]]\+/ s/$/ $p/" "$f"
-  done
-done
 
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
@@ -291,6 +244,14 @@ su - piyush -c '
 
   flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 '
+
+cp /home/piyush/Documents/projects/default/scripts/kernal-param-gen.sh /usr/local/bin
+. /usr/local/bin/kernal-param-gen.sh
+cat > /etc/kernel/postinst.d/zzz-kernal-param-gen <<'EOF'
+#!/usr/bin/env bash
+/usr/local/bin/kernal-param-gen.sh
+EOF
+chmod +x /etc/kernel/postinst.d/zzz-kernal-param-gen
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
