@@ -116,7 +116,7 @@ sed -i '/^timeout /d;/^editor /d' /boot/efi/loader/loader.conf
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
-echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' | sudo tee /etc/sudoers.d/nix-path
+echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' >/etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 
 if [[ "$hardware" == "hardware" ]]; then
@@ -258,7 +258,7 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.co
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-tee /root/.bash_profile > /dev/null <<'EOF'
+tee /root/.profile > /dev/null <<'EOF'
 case ":$PATH:" in
   *":/nix/var/nix/profiles/default/bin:"*) ;;
   *) PATH="$HOME/.local/state/nix/profile/bin:$PATH" ;;
@@ -345,8 +345,8 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
 if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer libvirtd.socket ipp-usb docker.socket cups.socket
-  systemctl disable docker.service dnsmasq bluetooth cups-browsed cups containerd
+  systemctl enable fstrim.timer ipp-usb docker.socket cups.socket
+  systemctl disable docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd
   systemctl start libvirtd
   virsh net-autostart default
 fi
