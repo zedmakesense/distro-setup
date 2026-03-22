@@ -231,22 +231,20 @@ EOF
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
-loginctl enable-linger piyush
 su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
+  git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/debsetup.git ~/Documents/projects/default/debsetup
   git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/
-  ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
   ln -s /usr/bin/fdfind ~/.local/bin/fd
   ln -s /usr/bin/batcat ~/.local/bin/bat
 
@@ -260,11 +258,11 @@ su - piyush -c '
     ln -sf "$link" ~/.local/bin/
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-  /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
-  zoxide add /home/piyush/Documents/projects/default/debsetup
+  . ~/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+  zoxide add ~/Documents/projects/default/debsetup
 
   tmp=$(mktemp)
-  head -n -3 ~/.profile > "$tmp"
+  head -n -3 ~/Documents/projects/default/dotfiles/.profile > "$tmp"
   echo "$tmp"
   . "$tmp"
 
@@ -285,18 +283,14 @@ su - piyush -c '
   cargo install typeman --no-default-features --features tui
   go install golang.org/x/tools/cmd/goimports@latest
 
+  podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
+  podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
+  podman volume create convertx-data
+  podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data ghcr.io/c4illin/convertx:latest
+  podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
+
   flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 '
-
-if [[ "$hardware" == "hardware" ]]; then
-  su - piyush -c '
-    podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
-    podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
-    podman volume create convertx-data
-    podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data ghcr.io/c4illin/convertx:latest
-    podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
-  '
-fi
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
@@ -345,6 +339,8 @@ for u in root piyush; do
   done
 done
 
+sudo -iu piyush ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
+
 corepack enable
 corepack prepare pnpm@latest --activate
 
@@ -381,8 +377,9 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
 if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer libvirtd.socket ipp-usb docker.socket
-  systemctl disable docker.service dnsmasq bluetooth avahi-daemon
+  systemctl enable fstrim.timer libvirtd.socket ipp-usb docker.socket cups.socket
+  systemctl disable docker.service dnsmasq bluetooth cups-browsed cups containerd
+  systemctl start libvirtd
   virsh net-autostart default
 fi
 if [[ "$extra" == "laptop" ]]; then
