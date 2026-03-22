@@ -2,7 +2,6 @@
 set -e
 
 kvantummanager --set Gruvbox
-flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 
 gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-Material-Dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'

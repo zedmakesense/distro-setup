@@ -48,7 +48,7 @@ if [[ "$hardware" == "hardware" ]]; then
   esac
 fi
 
-echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/99no-recommends
+echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/99no-recommends
 xargs -a pkglist.txt apt install -y
 
 if [[ "$extra" == "laptop" ]]; then
@@ -247,7 +247,7 @@ su - piyush -c '
 
 cp /home/piyush/Documents/projects/default/scripts/kernal-param-gen.sh /usr/local/bin
 . /usr/local/bin/kernal-param-gen.sh
-cat > /etc/kernel/postinst.d/zzz-kernal-param-gen <<'EOF'
+cat >/etc/kernel/postinst.d/zzz-kernal-param-gen <<'EOF'
 #!/usr/bin/env bash
 /usr/local/bin/kernal-param-gen.sh
 EOF
@@ -259,7 +259,7 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.co
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-tee /root/.bash_profile > /dev/null <<'EOF'
+tee /root/.bash_profile >/dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
@@ -272,8 +272,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#bemoji \
   nixpkgs#wayscriber \
   nixpkgs#lazydocker \
-  # nixpkgs#easyeffects \
-  # nixpkgs#rnnoise \
   nixpkgs#onlyoffice-desktopeditors \
   nixpkgs#typst \
   nixpkgs#clipse \
@@ -297,12 +295,10 @@ for u in root piyush; do
     yazi-rs/plugins:full-border \
     yazi-rs/plugins:smart-paste \
     yazi-rs/plugins:zoom \
-    yazi-rs/plugins:jump-to-char
-  do
+    yazi-rs/plugins:jump-to-char; do
     sudo -iu "$u" ya pkg add "$p" >/dev/null 2>&1 || true
   done
 done
-
 
 su - piyush -c 'ln -sf ~/Documents/projects/default/dotfiles/.profile ~/'
 
