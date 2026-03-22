@@ -259,16 +259,13 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 tee /root/.profile > /dev/null <<'EOF'
-case ":$PATH:" in
-  *":/nix/var/nix/profiles/default/bin:"*) ;;
-  *) PATH="$HOME/.local/state/nix/profile/bin:$PATH" ;;
-esac
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
-export PATH="$HOME/.local/state/nix/profile/bin:$PATH"
+export PATH=/root/.nix-profile/bin:$PATH
 systemctl restart nix-daemon
 
+nix profile add nixpkgs#yazi
 sudo -iu piyush nix profile add \
   nixpkgs#hyprpicker \
   nixpkgs#bemoji \
@@ -291,8 +288,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#go-migrate \
   nixpkgs#opencode \
   nixpkgs#jdk17_headless
-
-nix profile add nixpkgs#yazi
 
 for u in root piyush; do
   for p in \
