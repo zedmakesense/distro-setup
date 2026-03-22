@@ -258,7 +258,7 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.co
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-tee /root/.profile > /dev/null <<'EOF'
+tee /root/.bash_profile > /dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
