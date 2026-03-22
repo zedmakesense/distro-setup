@@ -262,7 +262,7 @@ tee /root/.bash_profile > /dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
-export PATH=/root/.local/state/nix/profile/bin:$PATH
+export PATH=/root/.nix-profile/bin:$PATH
 systemctl restart nix-daemon
 
 nix profile add nixpkgs#yazi
