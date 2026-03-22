@@ -255,10 +255,17 @@ chmod +x /etc/kernel/postinst.d/zzz-kernal-param-gen
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
-echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
+
+tee /root/.bash_profile > /dev/null <<'EOF'
+case ":$PATH:" in
+  *":/nix/var/nix/profiles/default/bin:"*) ;;
+  *) PATH="/nix/var/nix/profiles/default/bin:$PATH" ;;
+esac
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+EOF
 
 source ~/.profile
 systemctl restart nix-daemon
