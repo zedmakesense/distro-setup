@@ -57,11 +57,10 @@ if [[ "$extra" == "laptop" ]]; then
 # -------------------------
 USB_AUTOSUSPEND=1
 USB_EXCLUDE_PHONE=1
-# Allow TLP to touch Bluetooth
-USB_EXCLUDE_BTUSB=0
-USB_EXCLUDE_WWAN=1
-USB_EXCLUDE_AUDIO=1
 USB_EXCLUDE_PRINTER=1
+USB_EXCLUDE_WWAN=1
+USB_EXCLUDE_BTUSB=0
+USB_EXCLUDE_AUDIO=0
 
 # -------------------------
 # PCIe / Runtime Power Management
