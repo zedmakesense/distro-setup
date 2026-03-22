@@ -294,9 +294,9 @@ su - piyush -c '
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
+echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
-cp /home/piyush/Documents/projects/default/dotfiles/.profile ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 source ~/.profile
