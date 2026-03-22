@@ -262,7 +262,7 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 tee /root/.bash_profile > /dev/null <<'EOF'
 case ":$PATH:" in
   *":/nix/var/nix/profiles/default/bin:"*) ;;
-  *) PATH="/nix/var/nix/profiles/default/bin:$PATH" ;;
+  *) PATH="$HOME/.local/state/nix/profile/bin:$PATH" ;;
 esac
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
