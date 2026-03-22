@@ -185,6 +185,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 su - piyush -c '
+  set -euox pipefail
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
@@ -216,7 +217,6 @@ su - piyush -c '
 
   tmp=$(mktemp)
   head -n -3 ~/Documents/projects/default/dotfiles/.profile >| "$tmp"
-  echo "$tmp"
   . "$tmp"
 
   mkdir -p ~/.local/share/fonts/iosevka
