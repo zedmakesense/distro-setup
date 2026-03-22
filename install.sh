@@ -48,6 +48,7 @@ if [[ "$hardware" == "hardware" ]]; then
   esac
 fi
 
+echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/99no-recommends
 xargs -a pkglist.txt apt install -y
 
 if [[ "$extra" == "laptop" ]]; then
@@ -356,6 +357,6 @@ systemctl disable NetworkManager-wait-online.service avahi-daemon
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
 
-apt remove --purge -y vim-common vim-tiny nano vlc
+# apt remove --purge -y vim-common vim-tiny nano vlc
 apt autoremove --purge -y
 apt clean
