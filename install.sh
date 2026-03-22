@@ -191,7 +191,7 @@ su - piyush -c '
 
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
-  git clone https://github.com/zedmakesense/debsetup.git ~/Documents/projects/default/debsetup
+  git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/disto-setup
   git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
@@ -211,7 +211,7 @@ su - piyush -c '
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
   . ~/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
-  zoxide add ~/Documents/projects/default/debsetup
+  zoxide add ~/Documents/projects/default/distro-setup
 
   tmp=$(mktemp)
   head -n -3 ~/Documents/projects/default/dotfiles/.profile > "$tmp"
@@ -317,7 +317,7 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
   jq -r '.assets[].browser_download_url' |
   grep -E 'amd64.*\.deb$' |
   xargs -n1 wget
-apt install -y ~/debsetup/*deb
+apt install -y ~/distro-setup/*deb
 
 THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
 THEME_DEST="/usr/share/Kvantum/Gruvbox"
