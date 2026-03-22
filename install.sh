@@ -266,7 +266,7 @@ esac
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
-source ~/.profile
+export PATH="$HOME/.local/state/nix/profile/bin:$PATH"
 systemctl restart nix-daemon
 
 sudo -iu piyush nix profile add \
