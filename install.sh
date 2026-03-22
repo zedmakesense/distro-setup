@@ -272,8 +272,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#bemoji \
   nixpkgs#wayscriber \
   nixpkgs#lazydocker \
-  nixpkgs#easyeffects \
-  nixpkgs#rnnoise \
+  # nixpkgs#easyeffects \
+  # nixpkgs#rnnoise \
   nixpkgs#onlyoffice-desktopeditors \
   nixpkgs#typst \
   nixpkgs#clipse \
