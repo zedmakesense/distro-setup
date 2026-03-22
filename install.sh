@@ -214,7 +214,7 @@ su - piyush -c '
   zoxide add ~/Documents/projects/default/distro-setup
 
   tmp=$(mktemp)
-  head -n -3 ~/Documents/projects/default/dotfiles/.profile > "$tmp"
+  head -n -3 ~/Documents/projects/default/dotfiles/.profile >| "$tmp"
   echo "$tmp"
   . "$tmp"
 
