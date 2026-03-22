@@ -262,7 +262,7 @@ tee /root/.bash_profile > /dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
-export PATH=/root/.nix-profile/bin:$PATH
+export PATH=/root/.local/state/nix/profile/bin:$PATH
 systemctl restart nix-daemon
 
 nix profile add nixpkgs#yazi
@@ -302,7 +302,8 @@ for u in root piyush; do
   done
 done
 
-sudo -iu piyush ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
+
+su - piyush -c 'ln -sf ~/Documents/projects/default/dotfiles/.profile ~/'
 
 corepack enable
 corepack prepare pnpm@latest --activate
