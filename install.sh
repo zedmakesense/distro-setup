@@ -122,8 +122,8 @@ chmod 440 /etc/sudoers.d/*
 
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG libvirt,kvm,lpadmin piyush
-  chown root:libvirt /var/lib/libvirt/images
-  chmod 2775 /var/lib/libvirt/images
+  # chown root:libvirt /var/lib/libvirt/images
+  # chmod 2775 /var/lib/libvirt/images
 fi
 usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker piyush
 
@@ -278,6 +278,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#easyeffects \
   nixpkgs#rnnoise \
   nixpkgs#onlyoffice-desktopeditors \
+  nixpkgs#typst \
   nixpkgs#clipse \
   nixpkgs#caligula \
   nixpkgs#air \
