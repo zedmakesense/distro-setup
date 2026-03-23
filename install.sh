@@ -165,7 +165,7 @@ su - piyush -c '
 
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
-  git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/disto-setup
+  git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/distro-setup
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
@@ -183,7 +183,7 @@ su - piyush -c '
     ln -sf "$link" ~/.local/bin/
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-  . ~/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+  bash ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add ~/Documents/projects/default/distro-setup
 
   tmp=$(mktemp)
@@ -205,7 +205,6 @@ su - piyush -c '
 
   rustup default stable
   cargo install typeman --no-default-features --features tui
-  go install golang.org/x/tools/cmd/goimports@latest
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
   podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
@@ -271,7 +270,10 @@ for u in root piyush; do
   done
 done
 
-su - piyush -c 'ln -sf ~/Documents/projects/default/dotfiles/.profile ~/'
+su - piyush -c '
+go install golang.org/x/tools/cmd/goimports@latest
+ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
+'
 
 corepack enable
 corepack prepare pnpm@latest --activate
