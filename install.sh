@@ -17,11 +17,11 @@ select extra in "laptop" "bluetooth" "PC"; do
 done
 
 case "$extra" in
-  laptop) lines='1p;2p;3p' ;;
-  bluetooth) lines='1p;2p' ;;
-  PC) lines='1p' ;;
+laptop) lines='1p;2p;3p' ;;
+bluetooth) lines='1p;2p' ;;
+PC) lines='1p' ;;
 esac
-sed -n "$lines" pkgs.txt | tr ' ' '\n' > pkglist.txt
+sed -n "$lines" pkgs.txt | tr ' ' '\n' >pkglist.txt
 
 echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/99no-recommends
 xargs -a pkglist.txt apt install -y
@@ -95,8 +95,7 @@ echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_
 echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' >/etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 
-usermod -aG piyush
-usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,lpadmin  piyush
+usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,lpadmin piyush
 # chown root:libvirt /var/lib/libvirt/images
 # chmod 2775 /var/lib/libvirt/images
 
@@ -167,7 +166,6 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
   git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/disto-setup
-  git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
