@@ -158,7 +158,6 @@ flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/fla
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 
 loginctl enable-linger piyush
-systemctl start user@1000.service
 su - piyush -c '
   set -euox pipefail
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
