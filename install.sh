@@ -11,42 +11,20 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
 echo "Choose one:"
-select hardware in "vm" "hardware"; do
-  [[ -n $hardware ]] && break
-  echo "Invalid choice. Please select 1 for vm or 2 for hardware."
+select extra in "laptop" "bluetooth" "none"; do
+  [[ -n $extra ]] && break
+  echo "Invalid choice."
 done
 
-if [[ "$hardware" == "hardware" ]]; then
-  echo "Choose one:"
-  select extra in "laptop" "bluetooth" "none"; do
-    [[ -n $extra ]] && break
-    echo "Invalid choice."
-  done
-else
-  extra="none"
-fi
-
-case "$hardware" in
-vm)
-  sed -n '1p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
+case "$extra" in
+laptop)
+  sed -n '2p;3p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
   ;;
-hardware)
-  sed -n '1p;2p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
+bluetooth)
+  sed -n '2p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
   ;;
+none) ;;
 esac
-
-# For hardware:max, add lines 5 and/or 6 based on $extra
-if [[ "$hardware" == "hardware" ]]; then
-  case "$extra" in
-  laptop)
-    sed -n '3p;4p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
-    ;;
-  bluetooth)
-    sed -n '3p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
-    ;;
-  none) ;;
-  esac
-fi
 
 echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/99no-recommends
 xargs -a pkglist.txt apt install -y
@@ -120,12 +98,10 @@ echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_
 echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' >/etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 
-if [[ "$hardware" == "hardware" ]]; then
-  usermod -aG libvirt,kvm,lpadmin piyush
-  # chown root:libvirt /var/lib/libvirt/images
-  # chmod 2775 /var/lib/libvirt/images
-fi
-usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker piyush
+usermod -aG piyush
+usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,lpadmin  piyush
+# chown root:libvirt /var/lib/libvirt/images
+# chmod 2775 /var/lib/libvirt/images
 
 # UFW setup
 ufw allow in from 192.168.0.0/24
@@ -337,18 +313,15 @@ mkdir -p /etc/systemd/zram-generator.conf.d
   echo "fs-type = swap"
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
-if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer ipp-usb docker.socket cups.socket
-  systemctl disable docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd
-  systemctl start libvirtd
-  virsh net-autostart default
-fi
+systemctl start libvirtd
+virsh net-autostart default
+
+systemctl enable NetworkManager NetworkManager-dispatcher ufw fstrim.timer ipp-usb docker.socket cups.socket
+systemctl disable NetworkManager-wait-online.service avahi-daemon docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd
+systemctl mask systemd-rfkill systemd-rfkill.socket
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
 fi
-systemctl enable NetworkManager NetworkManager-dispatcher ufw
-systemctl mask systemd-rfkill systemd-rfkill.socket
-systemctl disable NetworkManager-wait-online.service avahi-daemon
 
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
