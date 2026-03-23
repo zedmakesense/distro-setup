@@ -92,7 +92,7 @@ sed -i '/^timeout /d;/^editor /d' /boot/efi/loader/loader.conf
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
-echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin"' >/etc/sudoers.d/nix-path
+echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' > /etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 
 usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,lpadmin piyush
