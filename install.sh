@@ -11,7 +11,7 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
 echo "Choose one:"
-select extra in "laptop" "bluetooth" "none"; do
+select extra in "laptop" "bluetooth" "PC"; do
   [[ -n $extra ]] && break
   echo "Invalid choice."
 done
@@ -19,7 +19,7 @@ done
 case "$extra" in
   laptop) lines='1p;2p;3p' ;;
   bluetooth) lines='1p;2p' ;;
-  none) lines='1p' ;;
+  PC) lines='1p' ;;
 esac
 sed -n "$lines" pkgs.txt | tr ' ' '\n' > pkglist.txt
 
