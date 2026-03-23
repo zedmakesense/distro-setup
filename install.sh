@@ -17,14 +17,11 @@ select extra in "laptop" "bluetooth" "none"; do
 done
 
 case "$extra" in
-laptop)
-  sed -n '2p;3p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
-  ;;
-bluetooth)
-  sed -n '2p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
-  ;;
-none) ;;
+  laptop) lines='1p;2p;3p' ;;
+  bluetooth) lines='1p;2p' ;;
+  none) lines='1p' ;;
 esac
+sed -n "$lines" pkgs.txt | tr ' ' '\n' > pkglist.txt
 
 echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/99no-recommends
 xargs -a pkglist.txt apt install -y
