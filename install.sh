@@ -28,9 +28,6 @@ xargs -a pkglist.txt apt install -y
 
 if [[ "$extra" == "laptop" ]]; then
   cat <<'EOF' >/etc/tlp.d/01-custom.conf
-# -------------------------
-# USB Power Management
-# -------------------------
 # USB_AUTOSUSPEND=1
 # USB_EXCLUDE_PHONE=1
 # USB_EXCLUDE_PRINTER=1
@@ -38,40 +35,10 @@ if [[ "$extra" == "laptop" ]]; then
 # USB_EXCLUDE_BTUSB=0
 # USB_EXCLUDE_AUDIO=0
 
-# -------------------------
-# PCIe / Runtime Power Management
-# -------------------------
-# RUNTIME_PM_ON_AC=auto
-# RUNTIME_PM_ON_BAT=auto
 RUNTIME_PM_DRIVER_DENYLIST="amdgpu radeon nouveau nvidia"
-
-# -------------------------
-# AHCI / SATA
-# -------------------------
-# AHCI_RUNTIME_PM_ON_AC=auto
-# AHCI_RUNTIME_PM_ON_BAT=auto
-# AHCI_RUNTIME_PM_TIMEOUT=15
-# SATA_LINKPWR_ON_AC="max_performance"
-# SATA_LINKPWR_ON_BAT="med_power_with_dipm"
-
-# -------------------------
-# Sound / Audio
-# -------------------------
-# SOUND_POWER_SAVE_ON_AC=0
-# SOUND_POWER_SAVE_ON_BAT=0
-# SOUND_POWER_SAVE_CONTROLLER=N
-
-# -------------------------
-# Wi-Fi
-# -------------------------
-# WIFI_PWR_ON_AC=off
-# WIFI_PWR_ON_BAT=off
-
-# -------------------------
-# Radio Device Wizard (RDW)
-# -------------------------
-# DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan"
 RESTORE_DEVICE_STATE_ON_STARTUP=1
+
+# DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan"
 
 # DEVICES_TO_DISABLE_ON_BAT=""
 # DEVICES_TO_ENABLE_ON_BAT=""
@@ -112,8 +79,6 @@ udevadm trigger
 ufw allow in from 192.168.0.0/24
 ufw allow out to 192.168.0.0/24
 
-ufw deny 631/tcp
-
 ufw allow in on virbr0 to any port 67 proto udp
 ufw allow out on virbr0 to any port 68 proto udp
 ufw allow in on virbr0 to any port 53 proto udp
@@ -122,12 +87,11 @@ ufw allow in on virbr0 to any port 53 proto tcp
 ufw allow out on virbr0 to any port 53 proto tcp
 ufw route allow in on virbr0 out on eth0 from 192.168.122.0/24 to any port 53 proto udp
 
-# ufw default allow routed
 ufw default deny incoming
 ufw default allow outgoing
 
 ufw enable
-ufw logging on
+ufw logging off
 
 echo 'ListenAddress 127.0.0.1' >>/etc/ssh/sshd_config
 
@@ -138,19 +102,15 @@ LLMNR=no
 EOF
 
 tee /etc/sysctl.d/99-hardening.conf >/dev/null <<'EOF'
-# networking
 net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
 
-# kernel hardening
 kernel.kptr_restrict = 2
 
-# file protections
 fs.protected_fifos = 2
 
-# bpf jit harden (if present)
 net.core.bpf_jit_harden = 2
 EOF
 
@@ -231,6 +191,7 @@ touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
+cp -r /home/piyush/Documents/projects/default/dotfiles/copy/yazi/ ~/.config
 
 tee /root/.bash_profile >/dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
@@ -253,10 +214,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#templ \
   nixpkgs#htmx-lsp \
   nixpkgs#go \
-  nixpkgs#gotools \
   nixpkgs#uv \
   nixpkgs#prettier \
-  nixpkgs#shfmt \
   nixpkgs#go-migrate \
   nixpkgs#opencode \
   nixpkgs#jdk17_headless
@@ -274,7 +233,6 @@ for u in root piyush; do
 done
 
 su - piyush -c '
-go install golang.org/x/tools/cmd/goimports@latest
 ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
 '
 
@@ -289,14 +247,11 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
 apt install -y ~/distro-setup/*deb
 
 THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
-THEME_DEST="/usr/share/Kvantum/Gruvbox"
-mkdir -p "$THEME_DEST"
-cp "$THEME_SRC/gruvbox-kvantum.kvconfig" "$THEME_DEST/Gruvbox.kvconfig"
-cp "$THEME_SRC/gruvbox-kvantum.svg" "$THEME_DEST/Gruvbox.svg"
-
-THEME_DEST="/usr/share"
-cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "$THEME_DEST/themes"
-cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "$THEME_DEST/icons"
+mkdir -p "/usr/share/Kvantum/Gruvbox"
+cp "$THEME_SRC/gruvbox-kvantum.kvconfig" "/usr/share/Kvantum/Gruvbox/Gruvbox.kvconfig"
+cp "$THEME_SRC/gruvbox-kvantum.svg" "/usr/share/Kvantum/Gruvbox/Gruvbox.svg"
+cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "/usr/share/themes"
+cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "/usr/share/icons"
 
 mkdir -p /etc/firefox-esr/policies
 ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox-esr/policies/policies.json
