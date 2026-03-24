@@ -31,35 +31,35 @@ if [[ "$extra" == "laptop" ]]; then
 # -------------------------
 # USB Power Management
 # -------------------------
-USB_AUTOSUSPEND=1
-USB_EXCLUDE_PHONE=1
-USB_EXCLUDE_PRINTER=1
-USB_EXCLUDE_WWAN=1
-USB_EXCLUDE_BTUSB=0
-USB_EXCLUDE_AUDIO=0
+# USB_AUTOSUSPEND=1
+# USB_EXCLUDE_PHONE=1
+# USB_EXCLUDE_PRINTER=1
+# USB_EXCLUDE_WWAN=1
+# USB_EXCLUDE_BTUSB=0
+# USB_EXCLUDE_AUDIO=0
 
 # -------------------------
 # PCIe / Runtime Power Management
 # -------------------------
-RUNTIME_PM_ON_AC=auto
-RUNTIME_PM_ON_BAT=auto
-RUNTIME_PM_DRIVER_DENYLIST="amdgpu nouveau nvidia r8169"
+# RUNTIME_PM_ON_AC=auto
+# RUNTIME_PM_ON_BAT=auto
+RUNTIME_PM_DRIVER_DENYLIST="amdgpu radeon nouveau nvidia"
 
 # -------------------------
 # AHCI / SATA
 # -------------------------
-AHCI_RUNTIME_PM_ON_AC=auto
-AHCI_RUNTIME_PM_ON_BAT=auto
-AHCI_RUNTIME_PM_TIMEOUT=15
-SATA_LINKPWR_ON_AC="max_performance"
-SATA_LINKPWR_ON_BAT="med_power_with_dipm"
+# AHCI_RUNTIME_PM_ON_AC=auto
+# AHCI_RUNTIME_PM_ON_BAT=auto
+# AHCI_RUNTIME_PM_TIMEOUT=15
+# SATA_LINKPWR_ON_AC="max_performance"
+# SATA_LINKPWR_ON_BAT="med_power_with_dipm"
 
 # -------------------------
 # Sound / Audio
 # -------------------------
-SOUND_POWER_SAVE_ON_AC=0
-SOUND_POWER_SAVE_ON_BAT=0
-SOUND_POWER_SAVE_CONTROLLER=N
+# SOUND_POWER_SAVE_ON_AC=0
+# SOUND_POWER_SAVE_ON_BAT=0
+# SOUND_POWER_SAVE_CONTROLLER=N
 
 # -------------------------
 # Wi-Fi
@@ -70,7 +70,8 @@ SOUND_POWER_SAVE_CONTROLLER=N
 # -------------------------
 # Radio Device Wizard (RDW)
 # -------------------------
-DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan wifi"
+# DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan"
+RESTORE_DEVICE_STATE_ON_STARTUP=1
 
 # DEVICES_TO_DISABLE_ON_BAT=""
 # DEVICES_TO_ENABLE_ON_BAT=""
@@ -324,7 +325,7 @@ systemctl start libvirtd
 virsh net-autostart default
 
 systemctl enable NetworkManager NetworkManager-dispatcher ufw fstrim.timer ipp-usb docker.socket cups.socket
-systemctl disable NetworkManager-wait-online.service avahi-daemon docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd
+systemctl disable NetworkManager-wait-online.service avahi-daemon docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd virtlogd.service
 systemctl mask systemd-rfkill systemd-rfkill.socket
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
@@ -333,6 +334,6 @@ fi
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
 
-# apt remove --purge -y vim-common vim-tiny nano vlc
+apt remove --purge -y vim-common vim-tiny nano cron anacron
 apt autoremove --purge -y
 apt clean
