@@ -99,6 +99,14 @@ usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,l
 # chown root:libvirt /var/lib/libvirt/images
 # chmod 2775 /var/lib/libvirt/images
 
+cat >/etc/udev/rules.d/90-backlight.rules <<'EOF'
+SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chown root:video /sys/class/backlight/%k/brightness"
+SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod 0664 /sys/class/backlight/%k/brightness"
+EOF
+
+udevadm control --reload-rules
+udevadm trigger
+
 # UFW setup
 ufw allow in from 192.168.0.0/24
 ufw allow out to 192.168.0.0/24
@@ -297,8 +305,8 @@ THEME_DEST="/usr/share"
 cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "$THEME_DEST/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "$THEME_DEST/icons"
 
-mkdir -p /etc/firefox/policies
-ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
+mkdir -p /etc/firefox-esr/policies
+ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox-esr/policies/policies.json
 
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))
