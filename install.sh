@@ -137,14 +137,6 @@ tee /etc/systemd/resolved.conf.d/disable-llmnr.conf >/dev/null <<'EOF'
 LLMNR=no
 EOF
 
-# apparmour stuff
-# aa-enforce /etc/apparmor.d/Discord
-# aa-enforce /etc/apparmor.d/steam
-# aa-enforce /etc/apparmor.d/signal-desktop
-# aa-enforce /etc/apparmor.d/firefox
-# aa-enforce /etc/apparmor.d/flatpak
-# aa-enforce /etc/apparmor.d/loupe
-
 tee /etc/sysctl.d/99-hardening.conf >/dev/null <<'EOF'
 # networking
 net.ipv4.conf.all.rp_filter = 1
@@ -334,6 +326,6 @@ fi
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
 
-apt remove --purge -y vim-common vim-tiny nano cron anacron
+apt remove --purge -y vim-common vim-tiny nano cron anacron apparmor
 apt autoremove --purge -y
 apt clean
