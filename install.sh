@@ -230,6 +230,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#uv \
   nixpkgs#prettier \
   nixpkgs#go-migrate \
+  nixpkgs#sql-formatter \
   nixpkgs#opencode \
   nixpkgs#jdk17_headless
 
