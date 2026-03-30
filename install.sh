@@ -63,7 +63,7 @@ echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_
 echo 'Defaults secure_path="/nix/var/nix/profiles/default/bin:/home/piyush/local/state/nix/profile/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' > /etc/sudoers.d/nix-path
 chmod 440 /etc/sudoers.d/*
 
-usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,docker,libvirt,kvm,lpadmin piyush
+usermod -aG sudo,adm,cdrom,plugdev,video,audio,input,netdev,libvirt,kvm,lpadmin piyush
 # chown root:libvirt /var/lib/libvirt/images
 # chmod 2775 /var/lib/libvirt/images
 
@@ -179,6 +179,14 @@ su - piyush -c '
   sed -i "s|Icon=zed|Icon=$HOME/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" ~/.local/share/applications/dev.zed.Zed.desktop
   sed -i "s|Exec=zed|Exec=$HOME/.local/zed.app/libexec/zed-editor|g" ~/.local/share/applications/dev.zed.Zed.desktop
 
+  curl -fsSL https://get.docker.com/rootless | sh
+  systemctl --user enable docker
+
+  DOCKER_CONFIG="$HOME/.config/docker"
+  mkdir -p "$DOCKER_CONFIG/cli-plugins"
+  curl -SL https://github.com/docker/compose/releases/download/v5.0.1/docker-compose-linux-x86_64 -o "$DOCKER_CONFIG/cli-plugins/docker-compose"
+  chmod +x "$DOCKER_CONFIG/cli-plugins/docker-compose"
+
   rustup default stable
   cargo install typeman --no-default-features --features tui
 
@@ -285,8 +293,8 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 systemctl start libvirtd
 virsh net-autostart default
 
-systemctl enable NetworkManager NetworkManager-dispatcher ufw fstrim.timer ipp-usb docker.socket cups.socket
-systemctl disable NetworkManager-wait-online.service avahi-daemon docker.service dnsmasq bluetooth cups-browsed cups containerd libvirtd virtlogd.service
+systemctl enable NetworkManager NetworkManager-dispatcher ufw fstrim.timer ipp-usb cups.socket
+systemctl disable NetworkManager-wait-online.service avahi-daemon dnsmasq bluetooth cups-browsed cups containerd libvirtd virtlogd.service
 systemctl mask systemd-rfkill systemd-rfkill.socket
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
