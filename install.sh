@@ -307,6 +307,6 @@ fi
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
 
-apt remove --purge -y vim-common vim-tiny nano cron anacron apparmor
+apt remove --purge -y nano cron anacron apparmor
 apt autoremove --purge -y
 apt clean
