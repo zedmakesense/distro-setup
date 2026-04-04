@@ -191,6 +191,9 @@ su - piyush -c '
   cargo install typeman --no-default-features --features tui
 
   git clone https://github.com/vimwiki/vimwiki.git ~/.config/vim/pack/plugins/start/vimwiki
+  git clone https://github.com/justinmk/vim-sneak.git ~/.config/vim/pack/plugins/start/vim-sneak
+  git clone https://github.com/wellle/targets.vim.git ~/.config/vim/pack/plugins/start/targets.vim
+  git clone https://github.com/svermeulen/vim-extended-ft.git ~/.config/vim/pack/plugins/start/vim-extended-ft
   vim -c "helptags ~/.config/vim/pack/plugins/start/vimwiki/doc" -c quit
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
