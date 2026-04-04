@@ -233,7 +233,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#hyprpicker \
   nixpkgs#bemoji \
   nixpkgs#wayscriber \
-  nixpkgs#lazydocker \
   nixpkgs#onlyoffice-desktopeditors \
   nixpkgs#typst \
   nixpkgs#clipse \
