@@ -190,6 +190,9 @@ su - piyush -c '
   rustup default stable
   cargo install typeman --no-default-features --features tui
 
+  git clone https://github.com/vimwiki/vimwiki.git ~/.config/vim/pack/plugins/start/vimwiki
+  vim -c "helptags ~/.config/vim/pack/plugins/start/vimwiki/doc" -c quit
+
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
   podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
   podman volume create convertx-data
@@ -212,6 +215,7 @@ touch ~/.local/state/zsh/history ~/.local/state/bash/history
 ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/vim/ ~/.config
 cp -r /home/piyush/Documents/projects/default/dotfiles/copy/yazi/ ~/.config
 
 tee /root/.bash_profile >/dev/null <<'EOF'
