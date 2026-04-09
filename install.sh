@@ -228,6 +228,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#clipse \
   nixpkgs#caligula \
   nixpkgs#air \
+  nixpkgs#gofumpt \
   nixpkgs#templ \
   nixpkgs#htmx-lsp \
   nixpkgs#go \
