@@ -6,6 +6,7 @@ kvantummanager --set Gruvbox
 gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-Material-Dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-key-theme 'Emacs'
 
 gsettings set org.virt-manager.virt-manager.new-vm firmware 'uefi'
 gsettings set org.virt-manager.virt-manager.new-vm cpu-default 'host-passthrough'
