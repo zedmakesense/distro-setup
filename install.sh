@@ -184,6 +184,7 @@ su - piyush -c '
 
   git clone https://github.com/vimwiki/vimwiki.git ~/.config/vim/pack/plugins/start/vimwiki
   git clone https://github.com/justinmk/vim-sneak.git ~/.config/vim/pack/plugins/start/vim-sneak
+  git clone https://github.com/jasonccox/vim-wayland-clipboard.git ~/.config/vim/pack/plugins/start/vim-wayland-clipboard
   vim -c "helptags ~/.config/vim/pack/plugins/start/vimwiki/doc" -c quit
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
