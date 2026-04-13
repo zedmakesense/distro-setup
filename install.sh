@@ -230,15 +230,13 @@ sudo -iu piyush nix profile add \
   nixpkgs#caligula \
   nixpkgs#air \
   nixpkgs#gofumpt \
-  nixpkgs#templ \
-  nixpkgs#htmx-lsp \
   nixpkgs#go \
   nixpkgs#uv \
   nixpkgs#prettier \
   nixpkgs#go-migrate \
   nixpkgs#sql-formatter \
-  nixpkgs#opencode \
-  nixpkgs#jdk17_headless
+  nixpkgs#jdk17_headless \
+  nixpkgs#opencode
 
 for u in root piyush; do
   for p in \
