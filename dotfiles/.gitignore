@@ -16,3 +16,7 @@
 .config/opencode/bun.lock
 .config/opencode/package.json
 .config/opencode/package-lock.json
+
+.config/mpv/fonts/
+.config/mpv/script-opts/
+.config/mpv/scripts/uosc/
