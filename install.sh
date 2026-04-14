@@ -187,7 +187,6 @@ su - piyush -c '
   vim -c "helptags ~/.config/vim/pack/plugins/start/vimwiki/doc" -c quit
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
-  podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
   podman volume create convertx-data
   podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data ghcr.io/c4illin/convertx:latest
   podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
