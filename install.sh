@@ -170,7 +170,7 @@ su - piyush -c '
   unzip IosevkaTerm.zip
   rm IosevkaTerm.zip
 
-  curl -fsSL https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/unix.sh
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/unix.sh)"
 
   wget -O /tmp/zed.tar.gz "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arch=x86_64&os=linux&source=docs"
   tar -xvf /tmp/zed.tar.gz -C ~/.local
