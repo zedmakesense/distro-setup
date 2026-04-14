@@ -142,6 +142,7 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/scripts
   git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/distro-setup
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/GruvboxTheme
+  cp ~/Documents/projects/distro-setup/dotfiles
 
   ln -sf ~/Documents/projects/distro-setup/dotfiles/.bashrc ~/
   ln -s /usr/bin/fdfind ~/.local/bin/fd
@@ -270,8 +271,8 @@ cp "$THEME_SRC/gruvbox-kvantum.svg" "/usr/share/Kvantum/Gruvbox/Gruvbox.svg"
 cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "/usr/share/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "/usr/share/icons"
 
-mkdir -p /etc/firefox-esr/policies
-ln -sf "/home/piyush/Documents/projects/distro-setup/dotfiles/firefox/policies.json" /etc/firefox-esr/policies/policies.json
+mkdir -p /etc/firefox/policies
+ln -sf "/home/piyush/Documents/projects/distro-setup/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
 
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))
