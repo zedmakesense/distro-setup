@@ -144,7 +144,6 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/distro-setup
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
-  cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/
   ln -s /usr/bin/fdfind ~/.local/bin/fd
   ln -s /usr/bin/batcat ~/.local/bin/bat
