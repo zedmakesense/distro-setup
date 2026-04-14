@@ -1,0 +1,210 @@
+{
+  "disable_ai": true,
+  "calls": {
+    "mute_on_join": true,
+  },
+  "window_decorations": "server",
+  "title_bar": {
+    "show_user_picture": false,
+    "show_sign_in": false,
+    "show_onboarding_banner": false,
+  },
+  "status_bar": {
+    "cursor_position_button": false,
+    // "experimental.show": false,
+  },
+  "search": {
+    "regex": true,
+    "button": false,
+  },
+  "use_smartcase_search": true,
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+    },
+    "button": false,
+  },
+  // "prettier": {
+  //   "allowed": true,
+  // },
+  "middle_click_paste": false,
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000,
+    },
+  },
+  "ui_font_family": "IosevkaTerm Nerd Font",
+  "theme": "Gruvbox Dark",
+  "buffer_font_family": "IosevkaTerm Nerd Font",
+
+  "vertical_scroll_margin": 10,
+  "cursor_shape": "block",
+  "cursor_blink": false,
+  "relative_line_numbers": "enabled",
+  "tab_size": 2,
+  "base_keymap": "Emacs",
+
+  "vim_mode": true,
+  "vim": {
+    "gdefault": true,
+    "use_smartcase_find": true,
+    "use_system_clipboard": "on_yank",
+  },
+  // "show_completions_on_input": false,
+
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false,
+    "show_tab_bar_buttons": false,
+  },
+  "tabs": {
+    "show_diagnostics": "errors",
+  },
+  "scrollbar": {
+    "show": "never",
+  },
+
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false,
+    "code_actions": false,
+  },
+  // "inline_code_actions": false,
+
+  "git_panel": {
+    "dock": "bottom",
+    "button": false,
+  },
+
+  "debugger": {
+    "button": false,
+  },
+
+  "notification_panel": {
+    "button": false,
+  },
+
+  "project_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "outline_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "collaboration_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "agent": {
+    "play_sound_when_agent_done": true,
+    "button": false,
+  },
+  "show_edit_predictions": false,
+
+  "file_types": {
+    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
+    "JSON": ["json", "jsonc", "*.code-snippets"],
+  },
+
+  "indent_guides": {
+    "coloring": "indent_aware",
+  },
+
+  "terminal": {
+    "button": false,
+    "minimum_contrast": 0,
+    "font_family": "IosevkaTerm Nerd Font",
+    "env": {
+      "EDITOR": "zed --wait",
+    },
+  },
+
+  "inlay_hints": {
+    "enabled": true,
+  },
+
+  "languages": {
+    "JavaScript": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"],
+        },
+      },
+    },
+    "Python": {
+      "tab_size": 4,
+      "formatter": {
+        "language_server": {
+          "name": "ruff",
+        },
+      },
+      "language_servers": ["ruff"],
+    },
+    "Go": {
+      "formatter": {
+        "external": {
+          "command": "goimports",
+        },
+      },
+    },
+    "Shell Script": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"],
+        },
+      },
+    },
+    "SQL": {
+      "formatter": {
+        "external": {
+          "command": "sql-formatter",
+          "arguments": ["--language", "postgresql"],
+        },
+      },
+    },
+  },
+
+  "lsp": {
+    "jdtls": {
+      "settings": {
+        "java_home": "/usr/lib/jvm/java-17-temurin-jdk",
+        "jdk_auto_download": true,
+      },
+    },
+    "tinymist": {
+      "settings": {
+        "exportPdf": "onSave",
+        "outputPath": "$root/$name",
+        "syntaxOnly": "onPowerSaving",
+      },
+    },
+  },
+
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+
+  "session": {
+    "trust_all_worktrees": true,
+  },
+
+  "auto_install_extensions": {
+    "html": true,
+    "dockerfile": true,
+    "java": true,
+    "make": true,
+    "sql": true,
+    "basher": true,
+    "Gruvbox Material": true,
+    "golangci-lint": true,
+    "stylint": true,
+    "typst": true,
+  },
+}

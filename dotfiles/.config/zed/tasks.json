@@ -1,0 +1,11 @@
+[
+  {
+    "label": "compile and run cpp",
+    "command": "g++ $ZED_FILE -o $ZED_STEM && ./$ZED_STEM && echo && echo 'Program finished' && echo",
+  },
+
+  {
+    "label": "compile and run c",
+    "command": "gcc $ZED_FILE -o $ZED_STEM && ./$ZED_STEM && echo && echo 'Program finished' && echo",
+  },
+]

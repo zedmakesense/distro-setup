@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "vimwiki": {
+      "rev": "72792615e739d0eb54a9c8f7e0a46a6e2407c9e8",
+      "src": "https://github.com/vimwiki/vimwiki"
+    }
+  }
+}

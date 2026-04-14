@@ -1,0 +1,62 @@
+[user]
+  name = zedonarch
+  email = zedonix@proton.me
+[init]
+  defaultBranch = main
+[credential "https://github.com"]
+  helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+  helper = !/usr/bin/gh auth git-credential
+[branch]
+  sort = -committerdate
+[tag]
+  sort = -version:refname
+[pager]
+  branch = true
+  diff = delta
+  log = delta
+  show = delta
+  blame = delta
+[advice]
+  addEmptyPathspec = false
+  pushNonFastForward = false
+  statusHints = false
+[core]
+  preloadindex = true
+  compression = 9
+  fscache = true
+  pager = delta
+  editor = vim
+[status]
+  branch = true
+[pull]
+  rebase = true
+[push]
+  autoSetupRemote = true
+[column]
+  ui = auto
+[maintenance]
+  auto = true
+  strategy = incremental
+[alias]
+  lg = log --all --graph --decorate --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --parents
+  co = checkout
+  cm = commit
+  p = push
+  st = status -sb
+  a = add --all
+[color]
+  ui = 1
+[help]
+  autocorrect = prompt
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  dark = true
+  navigate = true
+  line-numbers = true
+  syntax-theme = gruvbox-dark
+  true-color = always
+[merge]
+  conflictStyle = zdiff3

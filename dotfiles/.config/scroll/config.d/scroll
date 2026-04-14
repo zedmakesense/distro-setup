@@ -1,0 +1,33 @@
+# vim: ft=swayconfig
+# Disable all scroll compositor animations
+animations {
+    # make default behaviour: no animation, zero duration
+    default no 0
+
+    # explicit disables for known animation types
+    window_open no 0
+    window_move no 0
+    window_size no 0
+
+    # catch-all: some UI actions may be named differently in older/newer versions
+    # keep these entries if you have them in your config/example
+    # scale_workspace no 0
+    # overview no 0
+    # jump no 0
+}
+
+bindsym $mod+b set_mode h
+bindsym $mod+v set_mode v
+
+bindsym --no-repeat $mod+tab scale_workspace overview
+bindsym --whole-window button8 scale_workspace overview
+bindsym $mod+Shift+Ctrl+period scale_workspace reset
+bindsym $mod+equal fit_size h active proportional
+bindsym $mod+plus set_size h 0.5
+bindsym $mod+Shift+m toggle_size
+
+bindsym $mod+Shift+s space save default
+bindsym $mod+Shift+r space load default
+bindsym $mod+Shift+e space list
+
+for_window [all] inhibit_idle fullscreen

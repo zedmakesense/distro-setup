@@ -1,0 +1,102 @@
+[
+  {
+    "bindings": {
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-l": "workspace::ActivatePaneRight",
+      "alt-k": "workspace::ActivatePaneUp",
+      "alt-j": "workspace::ActivatePaneDown",
+      "ctrl-t": "terminal_panel::Toggle",
+      "ctrl-\\": "pane::SplitRight",
+      "ctrl--": "pane::SplitDown",
+    },
+  },
+
+  {
+    "context": "CommandPalette",
+    "bindings": {
+      "ctrl-[": "menu::Cancel",
+    },
+  },
+  {
+    "context": "FileFinder",
+    "bindings": {
+      "ctrl-[": "menu::Cancel",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-s": "editor::Format",
+      "ctrl-[": "editor::Cancel",
+      "alt-enter": "editor::SwitchSourceHeader",
+    },
+  },
+
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-p": null,
+      "ctrl-n": null,
+    },
+  },
+
+  {
+    "context": "vim_mode == normal && !Terminal",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "space g g": "git_panel::ToggleFocus",
+      "space g p": "git::Push",
+      "space o": "outline_panel::ToggleFocus",
+      "space d d": "diagnostics::Deploy",
+      "space d p": "debug_panel::ToggleFocus",
+      "space c": "collab_panel::ToggleFocus",
+      "space r": "projects::OpenRecent",
+    },
+  },
+
+  {
+    "context": "Workspace && !Editor && !Terminal && !ProjectPanel || vim_mode == normal",
+    "bindings": {
+      "space f": "file_finder::Toggle",
+      "space D": "workspace::CloseAllDocks",
+    },
+  },
+
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "q": "workspace::ToggleRightDock",
+    },
+  },
+
+  {
+    "context": "VimControl && !menu && !Terminal && vim_mode != operator",
+    "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd",
+    },
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+    "bindings": {
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets",
+    },
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual && !Terminal",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward",
+    },
+  },
+]
