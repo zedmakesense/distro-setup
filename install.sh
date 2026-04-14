@@ -135,34 +135,33 @@ loginctl enable-linger piyush
 su - piyush -c '
   set -euox pipefail
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
-  mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
+  mkdir -p ~/Documents/projects ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  git clone https://github.com/zedmakesense/dotfiles.git ~/Documents/projects/default/dotfiles
-  git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/default/scripts
-  git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/default/distro-setup
-  git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
+  git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/scripts
+  git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/distro-setup
+  git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/GruvboxTheme
 
-  ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/
+  ln -sf ~/Documents/projects/distro-setup/dotfiles/.bashrc ~/
   ln -s /usr/bin/fdfind ~/.local/bin/fd
   ln -s /usr/bin/batcat ~/.local/bin/bat
 
-  for link in ~/Documents/projects/default/dotfiles/.config/*; do
+  for link in ~/Documents/projects/distro-setup/dotfiles/.config/*; do
     ln -sf "$link" ~/.config/
   done
-  for link in ~/Documents/projects/default/dotfiles/copy/*; do
+  for link in ~/Documents/projects/distro-setup/dotfiles/copy/*; do
     cp -r "$link" ~/.config/
   done
-  for link in ~/Documents/projects/default/scripts/bin/*; do
+  for link in ~/Documents/projects/scripts/bin/*; do
     ln -sf "$link" ~/.local/bin/
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
   bash ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
-  zoxide add ~/Documents/projects/default/distro-setup
+  zoxide add ~/Documents/projects/distro-setup
 
   tmp=$(mktemp)
-  head -n -3 ~/Documents/projects/default/dotfiles/.profile >| "$tmp"
+  head -n -3 ~/Documents/projects/distro-setup/dotfiles/.profile >| "$tmp"
   . "$tmp"
 
   mkdir -p ~/.local/share/fonts/iosevka
@@ -194,7 +193,7 @@ su - piyush -c '
   flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 '
 
-cp /home/piyush/Documents/projects/default/scripts/kernal-param-gen.sh /usr/local/bin
+cp /home/piyush/Documents/projects/scripts/kernal-param-gen.sh /usr/local/bin
 . /usr/local/bin/kernal-param-gen.sh
 cat >/etc/kernel/postinst.d/zzz-kernal-param-gen <<'EOF'
 #!/usr/bin/env bash
@@ -204,11 +203,11 @@ chmod +x /etc/kernel/postinst.d/zzz-kernal-param-gen
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
-ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
-ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/vim/ ~/.config
-cp -r /home/piyush/Documents/projects/default/dotfiles/copy/yazi/ ~/.config
+ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/nix.conf /etc/nix/nix.conf
+ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.bashrc ~/
+ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.config/nvim/ ~/.config
+ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.config/vim/ ~/.config
+cp -r /home/piyush/Documents/projects/distro-setup/dotfiles/copy/yazi/ ~/.config
 
 tee /root/.bash_profile >/dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
@@ -249,7 +248,7 @@ for u in root piyush; do
 done
 
 su - piyush -c '
-ln -sf ~/Documents/projects/default/dotfiles/.profile ~/
+ln -sf ~/Documents/projects/distro-setup/dotfiles/.profile ~/
 '
 
 corepack enable
@@ -262,7 +261,7 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
   xargs -n1 wget
 apt install -y ~/distro-setup/*deb
 
-THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
+THEME_SRC="/home/piyush/Documents/projects/GruvboxTheme"
 mkdir -p "/usr/share/Kvantum/Gruvbox"
 cp "$THEME_SRC/gruvbox-kvantum.kvconfig" "/usr/share/Kvantum/Gruvbox/Gruvbox.kvconfig"
 cp "$THEME_SRC/gruvbox-kvantum.svg" "/usr/share/Kvantum/Gruvbox/Gruvbox.svg"
@@ -270,7 +269,7 @@ cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "/usr/share/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "/usr/share/icons"
 
 mkdir -p /etc/firefox-esr/policies
-ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox-esr/policies/policies.json
+ln -sf "/home/piyush/Documents/projects/distro-setup/dotfiles/firefox/policies.json" /etc/firefox-esr/policies/policies.json
 
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))
