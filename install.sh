@@ -142,16 +142,17 @@ su - piyush -c '
   git clone https://github.com/zedmakesense/scripts.git ~/Documents/projects/scripts
   git clone https://github.com/zedmakesense/distro-setup.git ~/Documents/projects/distro-setup
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/GruvboxTheme
-  cp ~/Documents/projects/distro-setup/dotfiles
+  cd ~/Documents/projects/distro-setup
+  git add worktree ~/Documents/projects/debian debian
 
-  ln -sf ~/Documents/projects/distro-setup/dotfiles/.bashrc ~/
+  ln -sf ~/Documents/projects/debian/dotfiles/.bashrc ~/
   ln -s /usr/bin/fdfind ~/.local/bin/fd
   ln -s /usr/bin/batcat ~/.local/bin/bat
 
-  for link in ~/Documents/projects/distro-setup/dotfiles/.config/*; do
+  for link in ~/Documents/projects/debian/dotfiles/.config/*; do
     ln -sf "$link" ~/.config/
   done
-  for link in ~/Documents/projects/distro-setup/dotfiles/copy/*; do
+  for link in ~/Documents/projects/debian/dotfiles/copy/*; do
     cp -r "$link" ~/.config/
   done
   for link in ~/Documents/projects/scripts/bin/*; do
@@ -159,10 +160,10 @@ su - piyush -c '
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
   bash ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
-  zoxide add ~/Documents/projects/distro-setup
+  zoxide add ~/Documents/projects/debian
 
   tmp=$(mktemp)
-  head -n -3 ~/Documents/projects/distro-setup/dotfiles/.profile >| "$tmp"
+  head -n -3 ~/Documents/projects/debian/dotfiles/.profile >| "$tmp"
   . "$tmp"
 
   mkdir -p ~/.local/share/fonts/iosevka
@@ -206,11 +207,11 @@ chmod +x /etc/kernel/postinst.d/zzz-kernal-param-gen
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
-ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/nix.conf /etc/nix/nix.conf
-ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.bashrc ~/
-ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.config/nvim/ ~/.config
-ln -sf /home/piyush/Documents/projects/distro-setup/dotfiles/.config/vim/ ~/.config
-cp -r /home/piyush/Documents/projects/distro-setup/dotfiles/copy/yazi/ ~/.config
+ln -sf /home/piyush/Documents/projects/debian/dotfiles/nix.conf /etc/nix/nix.conf
+ln -sf /home/piyush/Documents/projects/debian/dotfiles/.bashrc ~/
+ln -sf /home/piyush/Documents/projects/debian/dotfiles/.config/nvim/ ~/.config
+ln -sf /home/piyush/Documents/projects/debian/dotfiles/.config/vim/ ~/.config
+cp -r /home/piyush/Documents/projects/debian/dotfiles/copy/yazi/ ~/.config
 
 tee /root/.bash_profile >/dev/null <<'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
@@ -251,7 +252,7 @@ for u in root piyush; do
 done
 
 su - piyush -c '
-ln -sf ~/Documents/projects/distro-setup/dotfiles/.profile ~/
+ln -sf ~/Documents/projects/debian/dotfiles/.profile ~/
 '
 
 corepack enable
@@ -262,7 +263,7 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
   jq -r '.assets[].browser_download_url' |
   grep -E 'amd64.*\.deb$' |
   xargs -n1 wget
-apt install -y ~/distro-setup/*deb
+apt install -y ~/debian/*deb
 
 THEME_SRC="/home/piyush/Documents/projects/GruvboxTheme"
 mkdir -p "/usr/share/Kvantum/Gruvbox"
@@ -272,7 +273,7 @@ cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "/usr/share/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "/usr/share/icons"
 
 mkdir -p /etc/firefox/policies
-ln -sf "/home/piyush/Documents/projects/distro-setup/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
+ln -sf "/home/piyush/Documents/projects/debian/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
 
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))
